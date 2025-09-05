@@ -4,6 +4,7 @@ import RightsSummary from './components/RightsSummary';
 import ScriptSelector from './components/ScriptSelector';
 import RecordButton from './components/RecordButton';
 import LawDatabase from './components/LawDatabase';
+import UserSettings from './components/UserSettings';
 import Card from './components/Card';
 import { useLocation } from './hooks/useLocation';
 
@@ -86,6 +87,9 @@ function App() {
             <LawDatabase />
           </div>
         );
+      
+      case 'settings':
+        return <UserSettings />;
       
       default:
         return (

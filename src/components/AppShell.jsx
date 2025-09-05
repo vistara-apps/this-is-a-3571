@@ -1,12 +1,13 @@
 import React from 'react';
-import { Shield, Menu, Home, BookOpen, Mic, Search } from 'lucide-react';
+import { Shield, Menu, Home, BookOpen, Mic, Search, Settings } from 'lucide-react';
 
 const AppShell = ({ children, currentView, onViewChange, variant = 'default' }) => {
   const navItems = [
     { id: 'dashboard', icon: Home, label: 'Home' },
     { id: 'scripts', icon: BookOpen, label: 'Scripts' },
     { id: 'record', icon: Mic, label: 'Record' },
-    { id: 'laws', icon: Search, label: 'Laws' }
+    { id: 'laws', icon: Search, label: 'Laws' },
+    { id: 'settings', icon: Settings, label: 'Settings' }
   ];
 
   if (variant === 'minimalNav') {

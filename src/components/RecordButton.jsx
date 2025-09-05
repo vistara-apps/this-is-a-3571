@@ -1,11 +1,18 @@
-import React from 'react';
-import { Mic, Video, Square, AlertCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mic, Video, Square, AlertCircle, FileText, Sparkles, Loader } from 'lucide-react';
 import Button from './Button';
 import Alert from './Alert';
+import Card from './Card';
 import { useRecording } from '../hooks/useRecording';
+import { aiService } from '../services/aiService';
+import { userService } from '../services/userService';
 
 const RecordButton = ({ variant = 'audio' }) => {
   const { isRecording, recordings, error, startRecording, stopRecording, deleteRecording } = useRecording();
+  const [generatingSummary, setGeneratingSummary] = useState(null);
+  const [summaries, setSummaries] = useState({});
+  
+  const user = userService.getUser();
 
   const handleToggleRecording = () => {
     if (isRecording) {
@@ -17,6 +24,28 @@ const RecordButton = ({ variant = 'audio' }) => {
 
   const formatTimestamp = (date) => {
     return date.toLocaleString();
+  };
+
+  const generateSummary = async (recording) => {
+    setGeneratingSummary(recording.id);
+    
+    try {
+      const summary = await aiService.generateInteractionSummary(recording);
+      setSummaries(prev => ({
+        ...prev,
+        [recording.id]: summary
+      }));
+      
+      // Save to user service
+      userService.saveRecordedInteraction({
+        ...recording,
+        summary: summary.summary
+      });
+    } catch (error) {
+      console.error('Failed to generate summary:', error);
+    } finally {
+      setGeneratingSummary(null);
+    }
   };
 
   const Icon = variant === 'video' ? Video : Mic;
@@ -111,7 +140,7 @@ const RecordButton = ({ variant = 'audio' }) => {
                 />
               )}
               
-              <div className="mt-3 flex space-x-2">
+              <div className="mt-3 flex flex-wrap gap-2">
                 <Button
                   variant="outline"
                   size="sm"
@@ -142,7 +171,69 @@ const RecordButton = ({ variant = 'audio' }) => {
                 >
                   Share
                 </Button>
+                
+                {!summaries[recording.id] && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => generateSummary(recording)}
+                    disabled={generatingSummary === recording.id}
+                    className="flex items-center space-x-1"
+                  >
+                    {generatingSummary === recording.id ? (
+                      <>
+                        <Loader className="h-3 w-3 animate-spin" />
+                        <span>Analyzing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-3 w-3" />
+                        <span>AI Summary</span>
+                      </>
+                    )}
+                  </Button>
+                )}
               </div>
+              
+              {/* AI-Generated Summary */}
+              {summaries[recording.id] && (
+                <Card className="mt-4 p-4 bg-accent/10 border-accent/30">
+                  <div className="flex items-center space-x-2 mb-3">
+                    <FileText className="h-4 w-4 text-accent" />
+                    <h4 className="text-sm font-semibold text-white">AI Summary</h4>
+                  </div>
+                  
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <p className="text-white/80">{summaries[recording.id].summary}</p>
+                    </div>
+                    
+                    <div>
+                      <h5 className="text-white font-medium mb-2">Key Points:</h5>
+                      <ul className="space-y-1 text-white/70">
+                        {summaries[recording.id].keyPoints.map((point, index) => (
+                          <li key={index} className="flex items-start space-x-2">
+                            <span className="w-1 h-1 bg-accent rounded-full mt-2 flex-shrink-0"></span>
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h5 className="text-white font-medium mb-2">Recommendations:</h5>
+                      <ul className="space-y-1 text-white/70">
+                        {summaries[recording.id].recommendations.map((rec, index) => (
+                          <li key={index} className="flex items-start space-x-2">
+                            <span className="w-1 h-1 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></span>
+                            <span>{rec}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+              )}
             </div>
           ))}
         </div>
