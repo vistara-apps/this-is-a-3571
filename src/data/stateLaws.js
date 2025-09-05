@@ -20,6 +20,12 @@ export const stateLaws = {
         topic: "Recording Police",
         description: "California is a two-party consent state, but recording police in public is generally protected.",
         url: "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632"
+      },
+      {
+        id: "ca-3",
+        topic: "Miranda Rights",
+        description: "You must be read your Miranda rights before custodial interrogation.",
+        url: "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=834"
       }
     ]
   },
@@ -38,6 +44,12 @@ export const stateLaws = {
         topic: "Stop and Frisk",
         description: "Police can stop and frisk only with reasonable suspicion of criminal activity.",
         url: "https://www.nysenate.gov/legislation/laws/CPL/140.50"
+      },
+      {
+        id: "ny-2",
+        topic: "Right to Record",
+        description: "New York is a one-party consent state for recording conversations.",
+        url: "https://www.nysenate.gov/legislation/laws/PEN/250.00"
       }
     ]
   },
@@ -56,6 +68,84 @@ export const stateLaws = {
         topic: "Failure to Identify",
         description: "You must provide your name, residence address, and date of birth if lawfully arrested.",
         url: "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.38.htm"
+      },
+      {
+        id: "tx-2",
+        topic: "Open Carry",
+        description: "Licensed individuals may openly carry handguns in most public places.",
+        url: "https://statutes.capitol.texas.gov/Docs/GV/htm/GV.411.htm"
+      }
+    ]
+  },
+  "FL": {
+    name: "Florida",
+    rights: [
+      "You have the right to remain silent",
+      "You can refuse consent to search your vehicle",
+      "You must provide ID if lawfully detained",
+      "You can record police in public spaces",
+      "Stand Your Ground law applies in self-defense situations"
+    ],
+    laws: [
+      {
+        id: "fl-1",
+        topic: "Stop and Identify",
+        description: "You must provide identification if lawfully detained by police.",
+        url: "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0900-0999/0901/0901.html"
+      },
+      {
+        id: "fl-2",
+        topic: "Stand Your Ground",
+        description: "No duty to retreat before using force in self-defense if you reasonably believe it's necessary.",
+        url: "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0700-0799/0776/0776.html"
+      }
+    ]
+  },
+  "IL": {
+    name: "Illinois",
+    rights: [
+      "You have the right to remain silent",
+      "You can refuse consent to searches",
+      "You have the right to record police in public",
+      "You must provide ID only if arrested",
+      "Concealed carry requires a license"
+    ],
+    laws: [
+      {
+        id: "il-1",
+        topic: "Recording Police",
+        description: "Illinois allows recording of police officers performing their duties in public.",
+        url: "http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2353&ChapterID=53"
+      },
+      {
+        id: "il-2",
+        topic: "Concealed Carry",
+        description: "Concealed carry of firearms requires a valid license.",
+        url: "http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=3497&ChapterID=39"
+      }
+    ]
+  },
+  "WA": {
+    name: "Washington",
+    rights: [
+      "You have the right to remain silent",
+      "You can refuse consent to searches",
+      "You can record police interactions in public",
+      "No stop and identify law - ID not required unless arrested",
+      "Marijuana possession under 1 oz is legal for adults"
+    ],
+    laws: [
+      {
+        id: "wa-1",
+        topic: "Search and Seizure",
+        description: "Washington has strong protections against unreasonable searches under state constitution.",
+        url: "https://app.leg.wa.gov/RCW/default.aspx?cite=10.79"
+      },
+      {
+        id: "wa-2",
+        topic: "Marijuana Laws",
+        description: "Adults 21+ may possess up to 1 ounce of marijuana legally.",
+        url: "https://app.leg.wa.gov/RCW/default.aspx?cite=69.50"
       }
     ]
   }
